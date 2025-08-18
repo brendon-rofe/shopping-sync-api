@@ -8,7 +8,12 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(user: CreateUserDto): Promise<User> {
-    return await this.prisma.user.create({ data: user })
+    const result = await this.prisma.user.findFirst({ where: { email: user.email } })
+    if (result) {
+      return result
+    } else {
+      return await this.prisma.user.create({ data: user })
+    }
   }
 
   async findByEmail(email: string): Promise<User | null> {
