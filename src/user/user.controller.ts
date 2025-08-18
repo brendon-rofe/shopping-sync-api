@@ -7,11 +7,6 @@ import { CreateUserDto, UpdateUserEmailDto } from "./dto/user.dtos";
 export class UserController {
   constructor (private readonly userService: UserService) {}
 
-  @Get("/user")
-  async getAll(): Promise<User[] | null> {
-    return await this.userService.getAll();
-  }
-
   @Post("/user")
   async create(@Body() user: CreateUserDto): Promise<User> {
     return await this.userService.create(user);
