@@ -7,15 +7,19 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async getAll(): Promise<User[] | null> {
-    return this.prisma.user.findMany()
+    return await this.prisma.user.findMany()
   }
 
   async create(user): Promise<User> {
-    return this.prisma.user.create({ data: user })
+    return await this.prisma.user.create({ data: user })
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.prisma.user.findFirst({ where: { email } })
+    return await this.prisma.user.findFirst({ where: { email } })
+  }
+
+  async updateUser(email: string, data: Partial<User>) {
+    return await this.prisma.user.update({ where: { email }, data })
   }
 
 }
