@@ -10,4 +10,8 @@ export class UserService {
     return this.prisma.user.findMany()
   }
 
+  async create(user): Promise<User> {
+    return this.prisma.user.create({ data: user })
+  }
+
 }
