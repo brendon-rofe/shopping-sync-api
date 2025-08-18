@@ -18,8 +18,8 @@ export class UserService {
     return await this.prisma.user.findFirst({ where: { email } })
   }
 
-  async updateUser(email: string, data: Partial<User>) {
-    return await this.prisma.user.update({ where: { email }, data })
+  async updateUserEmail(email: string, newEmail: string) {
+    return await this.prisma.user.update({ where: { email }, data: { email: newEmail } })
   }
 
 }
