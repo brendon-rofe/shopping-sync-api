@@ -22,29 +22,44 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const result = await this.prisma.user.findUnique({ where: { email } })
-    if (result) {
-      return result
-    } else {
-      throw new NotFoundException(`User with email ${email} not found`)
+    try {
+      const result = await this.prisma.user.findUnique({ where: { email } })
+      if (result) {
+        return result
+      } else {
+        throw new NotFoundException(`User with email ${email} not found`)
+      }
+    } catch (error) {
+      console.error(error)
+      throw error
     }
   }
 
   async updateUserPassword(email: string, newPassword: string) {
-    const result = await this.prisma.user.findUnique({ where: { email } })
-    if (!result) {
-      throw new NotFoundException(`User with email ${email} not found`)
-    } else {
-      return await this.prisma.user.update({ where: { email }, data: { password: newPassword } })
+    try {
+      const result = await this.prisma.user.findUnique({ where: { email } })
+      if (!result) {
+        throw new NotFoundException(`User with email ${email} not found`)
+      } else {
+        return await this.prisma.user.update({ where: { email }, data: { password: newPassword } })
+      }
+    } catch (error) {
+      console.error(error)
+      throw error
     }
   }
 
   async deleteUser(email: string) {
-    const result = await this.prisma.user.findUnique({ where: { email } })
-    if (!result) {
-      throw new NotFoundException(`User with email ${email} not found`)
-    } else {
-      return await this.prisma.user.delete({ where: { email } })
+    try {
+      const result = await this.prisma.user.findUnique({ where: { email } })
+      if (!result) {
+        throw new NotFoundException(`User with email ${email} not found`)
+      } else {
+        return await this.prisma.user.delete({ where: { email } })
+      }
+    } catch (error) {
+      console.error(error)
+      throw error
     }
   }
 
