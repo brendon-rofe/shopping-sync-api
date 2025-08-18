@@ -1,4 +1,4 @@
-import { HttpCode, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDto } from "./dto/user.dtos";
@@ -26,11 +26,21 @@ export class UserService {
   }
 
   async updateUserPassword(email: string, newPassword: string) {
-    return await this.prisma.user.update({ where: { email }, data: { password: newPassword } })
+    const result = await this.prisma.user.findUnique({ where: { email } })
+    if (!result) {
+      throw new NotFoundException(`User with email ${email} not found`)
+    } else {
+      return await this.prisma.user.update({ where: { email }, data: { password: newPassword } })
+    }
   }
 
   async deleteUser(email: string) {
-    await this.prisma.user.delete({ where: { email} })
+    const result = await this.prisma.user.findUnique({ where: { email } })
+    if (!result) {
+      throw new NotFoundException(`User with email ${email} not found`)
+    } else {
+      return await this.prisma.user.delete({ where: { email } })
+    }
   }
 
 }
