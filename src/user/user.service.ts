@@ -35,7 +35,7 @@ export class UserService {
     }
   }
 
-  async updateUserPassword(email: string, newPassword: string) {
+  async updateUserPassword(email: string, newPassword: string): Promise<User> {
     try {
       const result = await this.prisma.user.findUnique({ where: { email } })
       if (!result) {
