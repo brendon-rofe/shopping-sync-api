@@ -22,4 +22,8 @@ export class UserService {
     return await this.prisma.user.update({ where: { email }, data: { email: newEmail } })
   }
 
+  async deleteUser(email: string) {
+    await this.prisma.user.delete({ where: { email} })
+  }
+
 }
