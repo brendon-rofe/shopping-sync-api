@@ -8,7 +8,7 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(user: CreateUserDto): Promise<User> {
-    const result = await this.prisma.user.findFirst({ where: { email: user.email } })
+    const result = await this.prisma.user.findUnique({ where: { email: user.email } })
     if (result) {
       return result
     } else {
@@ -17,7 +17,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findFirst({ where: { email } })
+    return await this.prisma.user.findUnique({ where: { email } })
   }
 
   async updateUserPassword(email: string, newPassword: string) {
