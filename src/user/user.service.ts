@@ -14,8 +14,8 @@ export class UserService {
     return await this.prisma.user.findFirst({ where: { email } })
   }
 
-  async updateUserEmail(email: string, newEmail: string) {
-    return await this.prisma.user.update({ where: { email }, data: { email: newEmail } })
+  async updateUserPassword(email: string, newPassword: string) {
+    return await this.prisma.user.update({ where: { email }, data: { password: newPassword } })
   }
 
   async deleteUser(email: string) {

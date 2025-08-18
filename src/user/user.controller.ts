@@ -18,8 +18,8 @@ export class UserController {
   }
 
   @Put("/user/:email")
-  async updateUser(@Param("email") email: string, @Body() newEmail: UpdateUserEmailDto) {
-    return await this.userService.updateUserEmail(email, newEmail.email)
+  async updateUser(@Param("email") email: string, @Body() password: UpdateUserEmailDto) {
+    return await this.userService.updateUserPassword(email, password.password)
   }
 
   @Delete("/user/:email")
