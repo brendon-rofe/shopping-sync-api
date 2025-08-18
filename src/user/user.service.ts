@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpCode, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDto } from "./dto/user.dtos";
@@ -16,8 +16,13 @@ export class UserService {
     }
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({ where: { email } })
+  async findByEmail(email: string): Promise<User> {
+    const result = await this.prisma.user.findUnique({ where: { email } })
+    if (result) {
+      return result
+    } else {
+      throw new NotFoundException(`User with email ${email} not found`)
+    }
   }
 
   async updateUserPassword(email: string, newPassword: string) {
