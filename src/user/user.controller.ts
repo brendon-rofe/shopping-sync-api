@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { User } from "@prisma/client";
+import { CreateUserDto, UpdateUserEmailDto } from "./dto/user.dtos";
 
 @Controller()
 export class UserController {
@@ -12,7 +13,7 @@ export class UserController {
   }
 
   @Post("/user")
-  async create(@Body() user): Promise<User> {
+  async create(@Body() user: CreateUserDto): Promise<User> {
     return await this.userService.create(user);
   }
 
@@ -22,7 +23,7 @@ export class UserController {
   }
 
   @Put("/user/:email")
-  async updateUser(@Param("email") email: string, @Body() newEmail) {
+  async updateUser(@Param("email") email: string, @Body() newEmail: UpdateUserEmailDto) {
     return await this.userService.updateUserEmail(email, newEmail.email)
   }
 
