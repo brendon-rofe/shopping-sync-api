@@ -2,18 +2,31 @@ import { ConflictException, Injectable, NotFoundException } from "@nestjs/common
 import { User } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDto } from "./dto/user.dtos";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+  ) {}
+  private readonly saltRounds = 10;
 
-  async create(user: CreateUserDto): Promise<User> {
+  hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, this.saltRounds);
+  }
+
+  async create(dto: CreateUserDto): Promise<User> {
+    const newUser = {
+      email: dto.email,
+      password: await this.hashPassword(dto.password)
+    }
+
     try {
-      const result = await this.prisma.user.findUnique({ where: { email: user.email } })
+      const result = await this.prisma.user.findUnique({ where: { email: dto.email } })
       if (result) {
         throw new ConflictException('User already exists');
       } else {
-        return await this.prisma.user.create({ data: user })
+        return await this.prisma.user.create({ data: newUser })
       }
     } catch (error) {
       console.error(error)
