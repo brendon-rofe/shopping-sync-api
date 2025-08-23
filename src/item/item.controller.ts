@@ -1,8 +1,13 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
+import { ItemService } from "./item.service";
 
-@Controller()
+@Controller("/items")
 export class ItemController {
+  constructor(private readonly itemService: ItemService) {}
 
-  
+  @Get()
+  async getAll() {
+    return await this.itemService.getAll();
+  }
 
 }
