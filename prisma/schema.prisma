@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,7 +19,7 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
-  Item      Item[]
+  items     Item[]
 }
 
 model Item {
