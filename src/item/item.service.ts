@@ -9,4 +9,8 @@ export class ItemService {
     return await this.prisma.item.findMany();
   }
 
+  async getById(id: number) {
+    return await this.prisma.item.findUnique({ where: { id } })
+  }
+
 }
