@@ -11,3 +11,10 @@ export class UpdateUserEmailDto {
   password: string;
 
 }
+
+export class GetUserDto {
+
+  userId: number;
+  email: string;
+
+}
