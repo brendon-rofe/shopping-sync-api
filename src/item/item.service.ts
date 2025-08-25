@@ -9,8 +9,9 @@ export class ItemService {
     return await this.prisma.item.findMany();
   }
 
-  async getById(id: number) {
-    return await this.prisma.item.findUnique({ where: { id } })
+  async getById(id: string) {
+    const itemId = Number(id)
+    return await this.prisma.item.findUnique({ where: { id: itemId } })
   }
 
 }

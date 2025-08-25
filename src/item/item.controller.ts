@@ -11,7 +11,7 @@ export class ItemController {
   }
 
   @Get("/:id")
-  async getById(@Param("id") id: number) {
+  async getById(@Param("id") id: string) {
     return await this.itemService.getById(id);
   }
 
