@@ -17,6 +17,7 @@ export class UserService {
 
   async create(dto: CreateUserDto): Promise<User> {
     const newUser = {
+      username: dto.username,
       email: dto.email,
       password: await this.hashPassword(dto.password)
     }
