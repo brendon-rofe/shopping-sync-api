@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards, Put, Delete } from "@nestjs/common";
 import { ItemService } from "./item.service";
 import { CreateItemDto } from "./dto/create-item.dto";
 import { JwtAuthGuard } from "src/auth/jwt.auth-guard";
@@ -28,6 +28,11 @@ export class ItemController {
   @Put("/:id")
   async update(@Param("id") id: string, @GetUser('userId') user: GetUserDto, @Body() dto: CreateItemDto) {
     return await this.itemService.update(id, dto, user.userId);
+  }
+
+  @Delete("/:id")
+  async delete(@Param("id") id: string, @GetUser('userId') user: GetUserDto) {
+    return await this.itemService.delete(id, user.userId);
   }
 
 }

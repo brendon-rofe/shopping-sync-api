@@ -24,4 +24,9 @@ export class ItemService {
     return await this.prisma.item.update({ where: { id: itemId, userId }, data: dto })
   }
 
+  async delete(id: string, userId: number) {
+    const itemId = Number(id)
+    return await this.prisma.item.delete({ where: { id: itemId, userId } })
+  }
+
 }
