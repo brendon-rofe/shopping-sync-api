@@ -1,5 +1,6 @@
-export class CreateHouseHoldDto {
+export class CreateHouseholdDto {
 
-  name: string;
+  name: string
+  joinCode: string
 
 }
