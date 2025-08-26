@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateItemDto } from "./dto/create-item.dto";
-import { ItemStatus } from "@prisma/client";
 
 @Injectable()
 export class ItemService {
@@ -11,13 +10,13 @@ export class ItemService {
     return await this.prisma.item.create({ data: { ...dto, userId } })
   }
 
-  async getAll() {
-    return await this.prisma.item.findMany();
+  async getAll(userId: number) {
+    return await this.prisma.item.findMany({ where: { userId } });
   }
 
-  async getById(id: string) {
+  async getById(id: string, userId: number) {
     const itemId = Number(id)
-    return await this.prisma.item.findUnique({ where: { id: itemId } })
+    return await this.prisma.item.findUnique({ where: { id: itemId, userId } })
   }
 
 }
