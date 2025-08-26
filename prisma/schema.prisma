@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,9 +8,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ItemStatus {
+  NEEDED
+  IN_CART
+  BOUGHT
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
+  username  String   @unique
   password  String
   createdAt DateTime @default(now())
+  items     Item[]
+}
+
+model Item {
+  id        Int        @id @default(autoincrement())
+  name      String
+  quantity  Int        @default(1)
+  status    ItemStatus @default(NEEDED)
+  unit      String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
 }
