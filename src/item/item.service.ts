@@ -19,4 +19,9 @@ export class ItemService {
     return await this.prisma.item.findUnique({ where: { id: itemId, userId } })
   }
 
+  async update(id: string, dto: CreateItemDto, userId: number) {
+    const itemId = Number(id)
+    return await this.prisma.item.update({ where: { id: itemId, userId }, data: dto })
+  }
+
 }
