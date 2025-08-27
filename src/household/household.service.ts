@@ -8,5 +8,10 @@ export class HouseholdService {
 
   async create(dto: CreateHouseholdDto) {
     return this.prisma.household.create({ data: dto })
-    }
+  }
+
+  async findAll() {
+    return this.prisma.household.findMany()
+  }
+
 }
