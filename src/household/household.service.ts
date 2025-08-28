@@ -14,4 +14,19 @@ export class HouseholdService {
     return this.prisma.household.findMany()
   }
 
+  async findOne(id: string) {
+    const houseHoldId = Number(id)
+    return this.prisma.household.findUnique({ where: { id: houseHoldId } })
+  }
+
+  async update(id: string, dto: CreateHouseholdDto) {
+    const houseHoldId = Number(id)
+    return this.prisma.household.update({ where: { id: houseHoldId }, data: dto })
+  }
+
+  async delete(id: string) {
+    const houseHoldId = Number(id)
+    return this.prisma.household.delete({ where: { id: houseHoldId } })
+  }
+
 }
