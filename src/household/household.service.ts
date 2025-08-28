@@ -10,11 +10,11 @@ export class HouseholdService {
     return this.prisma.household.create({ data: dto })
   }
 
-  async findAll() {
+  async getAll() {
     return this.prisma.household.findMany()
   }
 
-  async findOne(id: string) {
+  async getOne(id: string) {
     const houseHoldId = Number(id)
     return this.prisma.household.findUnique({ where: { id: houseHoldId } })
   }
