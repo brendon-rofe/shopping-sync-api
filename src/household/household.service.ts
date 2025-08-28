@@ -14,7 +14,7 @@ export class HouseholdService {
     return this.prisma.household.findMany()
   }
 
-  async getOne(id: string) {
+  async getById(id: string) {
     const houseHoldId = Number(id)
     return this.prisma.household.findUnique({ where: { id: houseHoldId } })
   }

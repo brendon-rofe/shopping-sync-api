@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { HouseholdService } from "./household.service";
 import { JwtAuthGuard } from "src/auth/jwt.auth-guard";
 
@@ -11,6 +11,11 @@ export class HouseHoldController {
   @Get()
   async getAll() {
     return await this.householdService.getAll();
+  }
+
+  @Get("/:id")
+  async getById(@Param("id") id: string) {
+    return await this.householdService.getById(id);
   }
 
 }
