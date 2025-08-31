@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { HouseholdService } from "./household.service";
 import { JwtAuthGuard } from "src/auth/jwt.auth-guard";
 import { CreateHouseholdDto } from "./create-household.dto";
@@ -22,6 +22,11 @@ export class HouseHoldController {
   @Post()
   async create(@Body() dto: CreateHouseholdDto) {
     return await this.householdService.create(dto);
+  }
+
+  @Put("/:id")
+  async update(@Param("id") id: string, @Body() dto: CreateHouseholdDto) {
+    return await this.householdService.update(id, dto);
   }
 
 }
