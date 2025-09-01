@@ -24,6 +24,11 @@ export class HouseholdService {
     return this.prisma.household.update({ where: { id: houseHoldId }, data: dto })
   }
 
+  async updateName(id: string, name: string) {
+    const houseHoldId = Number(id)
+    return await this.prisma.household.update({ where: { id: houseHoldId }, data: { name } })
+  }
+
   async delete(id: string) {
     const houseHoldId = Number(id)
     return this.prisma.household.delete({ where: { id: houseHoldId } })
