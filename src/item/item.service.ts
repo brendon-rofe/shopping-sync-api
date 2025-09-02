@@ -7,11 +7,11 @@ export class ItemService {
   constructor(private prisma: PrismaService) {}
 
   async create(dto: CreateItemDto, userId: number) {
-    return await this.prisma.item.create({ data: { ...dto, userId } })
+    return await this.prisma.item.create({ data: { ...dto, addedById: userId, householdId: dto.householdId } })
   }
 
   async getAll(userId: number) {
-    return await this.prisma.item.findMany({ where: { userId } });
+    return await this.prisma.item.findMany();
   }
 
   async getById(id: string, userId: number) {

@@ -6,5 +6,6 @@ export class CreateItemDto {
   quantity?: number
   status?: ItemStatus
   unit?: string
+  householdId: number
 
 }
