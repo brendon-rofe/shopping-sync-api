@@ -16,17 +16,17 @@ export class ItemService {
 
   async getById(id: string, userId: number) {
     const itemId = Number(id)
-    return await this.prisma.item.findUnique({ where: { id: itemId, userId } })
+    return await this.prisma.item.findUnique({ where: { id: itemId, addedById: userId } })
   }
 
   async update(id: string, dto: CreateItemDto, userId: number) {
     const itemId = Number(id)
-    return await this.prisma.item.update({ where: { id: itemId, userId }, data: dto })
+    return await this.prisma.item.update({ where: { id: itemId, addedById: userId }, data: dto })
   }
 
   async delete(id: string, userId: number) {
     const itemId = Number(id)
-    return await this.prisma.item.delete({ where: { id: itemId, userId } })
+    return await this.prisma.item.delete({ where: { id: itemId, addedById: userId } })
   }
 
 }
