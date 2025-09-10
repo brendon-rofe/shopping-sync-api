@@ -7,7 +7,7 @@ export class MembershipService {
 
   async getById(id: string) {
     const membershipId = Number(id)
-    await this.prisma.membership.findFirst({
+    await this.prisma.membership.findUnique({
         where: {
           id: membershipId,
         },
