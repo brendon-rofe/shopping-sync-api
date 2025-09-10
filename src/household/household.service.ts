@@ -1,13 +1,25 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateHouseholdDto } from "./household.dtos";
+import { MembershipService } from "src/membership/membership.service";
+import { MembershipRole } from "@prisma/client";
 
 @Injectable()
 export class HouseholdService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private membershipService: MembershipService
+  ) {}
 
-  async create(dto: CreateHouseholdDto) {
-    return this.prisma.household.create({ data: dto })
+  async create(userId: number, dto: CreateHouseholdDto) {
+    const newHousehold = await this.prisma.household.create({ data: dto })
+    const initialMembershipDto = {
+      userId: userId,
+      householdId: newHousehold.id,
+      role: MembershipRole.OWNER
+    }
+    await this.membershipService.create(initialMembershipDto)
+    return newHousehold
   }
 
   async getAll() {

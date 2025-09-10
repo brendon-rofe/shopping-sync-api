@@ -2,8 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nes
 import { HouseholdService } from "./household.service";
 import { JwtAuthGuard } from "src/auth/jwt.auth-guard";
 import { CreateHouseholdDto } from "./create-household.dto";
+import { GetUser } from "src/auth/get-user.decorator";
+import { GetUserDto } from "src/user/dto/user.dtos";
 
-
+@UseGuards(JwtAuthGuard)
 @Controller("/household")
 export class HouseHoldController {
   constructor(private readonly householdService: HouseholdService) {}
@@ -20,8 +22,8 @@ export class HouseHoldController {
   }
 
   @Post()
-  async create(@Body() dto: CreateHouseholdDto) {
-    return await this.householdService.create(dto);
+  async create(@Body() dto: CreateHouseholdDto, @GetUser('userId') user: GetUserDto) {
+    return await this.householdService.create(user.userId, dto);
   }
 
   @Put("/:id")
