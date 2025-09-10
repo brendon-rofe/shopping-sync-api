@@ -34,4 +34,10 @@ export class MembershipService {
     })
   }
 
+  async delete(userId: number, householdId: number) {
+    return await this.prisma.membership.delete({
+      where: { userId_householdId: { userId, householdId } },
+    })
+  }
+
 }
