@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateMembershipDto } from './creat-membership.dto';
 
 @Injectable()
 export class MembershipService {
@@ -13,6 +14,16 @@ export class MembershipService {
         },
       }
     )
+  }
+
+  async create(dto: CreateMembershipDto) {
+    return await this.prisma.membership.create({
+      data: {
+        userId: dto.userId,
+        householdId: dto.householdId,
+        role: dto.role,
+      },
+    })
   }
 
 }
