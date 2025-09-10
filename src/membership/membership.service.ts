@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateMembershipDto } from './creat-membership.dto';
+import { MembershipRole } from '@prisma/client';
 
 @Injectable()
 export class MembershipService {
@@ -23,6 +24,13 @@ export class MembershipService {
         householdId: dto.householdId,
         role: dto.role,
       },
+    })
+  }
+
+  async updateRole(userId: number, householdId: number, role: MembershipRole) {
+    return await this.prisma.membership.update({
+      where: { userId_householdId: { userId: userId, householdId } },
+      data: { role: role }
     })
   }
 
